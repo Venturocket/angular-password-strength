@@ -7,7 +7,7 @@
 angular.module("vr.directives.passwordStrength.width", ["vr.filters.passwordStrength.percent"])
 	.directive("pwWidth", ['$filter', function($filter) {
 		return {
-			restrict: "EA",
+			restrict: "A",
 			scope: {
 				password: '@pwWidth'
 			},

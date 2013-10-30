@@ -7,7 +7,7 @@
 angular.module("vr.directives.passwordStrength.class", ["vr.filters.passwordStrength.level"])
 	.directive("pwClass", ['$filter', function($filter) {
 		return {
-			restrict: "AC",
+			restrict: "A",
 			scope: {
 				password: '@pwClass',
 				levels: '@pwLevels'
