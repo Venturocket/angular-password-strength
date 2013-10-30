@@ -227,7 +227,7 @@ angular.module('vr.services.passwordStrength', [])
 angular.module("vr.directives.passwordStrength.class", ["vr.filters.passwordStrength.level"])
 	.directive("pwClass", ['$filter', function($filter) {
 		return {
-			restrict: "AC",
+			restrict: "A",
 			scope: {
 				password: '@pwClass',
 				levels: '@pwLevels'
@@ -273,7 +273,7 @@ angular.module("vr.directives.passwordStrength.class", ["vr.filters.passwordStre
 angular.module("vr.directives.passwordStrength.width", ["vr.filters.passwordStrength.percent"])
 	.directive("pwWidth", ['$filter', function($filter) {
 		return {
-			restrict: "EA",
+			restrict: "A",
 			scope: {
 				password: '@pwWidth'
 			},
