@@ -26,11 +26,14 @@ angular.module('vr.services.passwordStrength', [])
 				 * @returns {number}
 				 */
 				strength: function(password) {
-					var length = password.length;
-					if(length < aspects.minimumLength.min) {
-						length /= 2;	
+					if(password) {
+						var length = password.length;
+						if(length < aspects.minimumLength.min) {
+							length /= 2;	
+						}
+						return length / aspects.minimumLength.min * aspects.minimumLength.weight;
 					}
-					return length / aspects.minimumLength.min * aspects.minimumLength.weight;
+					return 0;
 				}
 			},
 			uppercaseLetters: {
@@ -42,13 +45,16 @@ angular.module('vr.services.passwordStrength', [])
 				 * @returns {number}
 				 */
 				strength: function(password) {
-					var matches = password.match(/[A-Z]/g);
-					if(!matches) {
-						return 0;
+					if(password) {
+						var matches = password.match(/[A-Z]/g);
+						if(!matches) {
+							return 0;
+						}
+						return matches.length >= aspects.uppercaseLetters.min?
+									aspects.uppercaseLetters.weight:
+									(matches.length / aspects.uppercaseLetters.min * aspects.uppercaseLetters.weight);
 					}
-					return matches.length >= aspects.uppercaseLetters.min?
-						   		aspects.uppercaseLetters.weight:
-								(matches.length / aspects.uppercaseLetters.min * aspects.uppercaseLetters.weight);
+					return 0;
 				}
 			},
 			lowercaseLetters: {
@@ -60,13 +66,16 @@ angular.module('vr.services.passwordStrength', [])
 				 * @returns {number}
 				 */
 				strength: function(password) {
-					var matches = password.match(/[a-z]/g);
-					if(!matches) {
-						return 0;
+					if(password) {
+						var matches = password.match(/[a-z]/g);
+						if(!matches) {
+							return 0;
+						}
+						return matches.length >= aspects.lowercaseLetters.min?
+									aspects.lowercaseLetters.weight:
+									(matches.length / aspects.lowercaseLetters.min * aspects.lowercaseLetters.weight);
 					}
-					return matches.length >= aspects.lowercaseLetters.min?
-						   		aspects.lowercaseLetters.weight:
-								(matches.length / aspects.lowercaseLetters.min * aspects.lowercaseLetters.weight);
+					return 0;
 				}
 			},
 			symbols: {
@@ -78,13 +87,16 @@ angular.module('vr.services.passwordStrength', [])
 				 * @returns {number}
 				 */
 				strength: function(password) {
-					var matches = password.match(/[$-/:-?{-~!\"^_`\[\]]/g);
-					if(!matches) {
-						return 0;
+					if(password) {
+						var matches = password.match(/[$-/:-?{-~!\"^_`\[\]]/g);
+						if(!matches) {
+							return 0;
+						}
+						return matches.length >= aspects.symbols.min?
+									aspects.symbols.weight:
+									(matches.length / aspects.symbols.min * aspects.symbols.weight);
 					}
-					return matches.length >= aspects.symbols.min?
-						   		aspects.symbols.weight:
-								(matches.length / aspects.symbols.min * aspects.symbols.weight);
+					return 0;
 				}
 			},
 			numbers: {
@@ -96,13 +108,16 @@ angular.module('vr.services.passwordStrength', [])
 				 * @returns {number}
 				 */
 				strength: function(password) {
-					var matches = password.match(/[0-9]/g);
-					if(!matches) {
-						return 0;
+					if(password) {
+						var matches = password.match(/[0-9]/g);
+						if(!matches) {
+							return 0;
+						}
+						return matches.length >= aspects.numbers.min?
+									aspects.numbers.weight:
+									(matches.length / aspects.numbers.min * aspects.numbers.weight);
 					}
-					return matches.length >= aspects.numbers.min?
-						   		aspects.numbers.weight:
-								(matches.length / aspects.numbers.min * aspects.numbers.weight);
+					return 0;
 				}
 			}, 
 			duplicates: {
@@ -114,12 +129,15 @@ angular.module('vr.services.passwordStrength', [])
 				 * @returns {number}
 				 */
 				strength: function(password) {
-					var strength = 0;
-					var matches = password.match(new RegExp("(.)\\1{"+aspects.duplicates.max+",}","g"));
-					angular.forEach(matches, function(match) {
-						strength += (match.length - aspects.duplicates.max) * aspects.duplicates.weight;
-					});
-					return strength;
+					if(password) {
+						var strength = 0;
+						var matches = password.match(new RegExp("(.)\\1{"+aspects.duplicates.max+",}","g"));
+						angular.forEach(matches, function(match) {
+							strength += (match.length - aspects.duplicates.max) * aspects.duplicates.weight;
+						});
+						return strength;
+					}
+					return 0;
 				}
 			},
 			consecutive: {
@@ -131,38 +149,41 @@ angular.module('vr.services.passwordStrength', [])
 				 * @returns {number}
 				 */
 				strength: function(password) {
-					var strength = 0;
-					var lastChar = 0;
-					var inc = true;
-					var count = 0;
-					for(var i=0;i<=password.length;i++) {
-						var charCode = -99;
-						if(i < password.length) {
-							charCode = password.charCodeAt(i);
-						}
-						if(charCode == lastChar+1) {
-							if(inc) {
-								count++;
-							} else {
-								count = 2;
+					if(password) {
+						var strength = 0;
+						var lastChar = 0;
+						var inc = true;
+						var count = 0;
+						for(var i=0;i<=password.length;i++) {
+							var charCode = -99;
+							if(i < password.length) {
+								charCode = password.charCodeAt(i);
 							}
-							inc = true;
-						} else if(charCode == lastChar-1) {
-							if(!inc) {
-								count++;
+							if(charCode == lastChar+1) {
+								if(inc) {
+									count++;
+								} else {
+									count = 2;
+								}
+								inc = true;
+							} else if(charCode == lastChar-1) {
+								if(!inc) {
+									count++;
+								} else {
+									count = 2;
+								}
+								inc = false;
 							} else {
-								count = 2;
+								strength += count > aspects.consecutive.max?
+												(count - aspects.consecutive.max) * aspects.consecutive.weight:
+												0;
+								count = 1;
 							}
-							inc = false;
-						} else {
-							strength += count > aspects.consecutive.max?
-											(count - aspects.consecutive.max) * aspects.consecutive.weight:
-											0;
-							count = 1;
+							lastChar = charCode;
 						}
-						lastChar = charCode;
+						return strength;
 					}
-					return strength;
+					return 0;
 				}
 			},
 			dictionary: {
@@ -175,13 +196,16 @@ angular.module('vr.services.passwordStrength', [])
 				 * @returns {number}
 				 */
 				strength: function(password) {
-					var strength = 0;
-					angular.forEach(aspects.dictionary.words, function(word) {
-						strength += password.indexOf(word) >= 0?
-										aspects.dictionary.weight:
-										0;
-					});
-					return strength;
+					if(password) {
+						var strength = 0;
+						angular.forEach(aspects.dictionary.words, function(word) {
+							strength += password.indexOf(word) >= 0?
+											aspects.dictionary.weight:
+											0;
+						});
+						return strength;
+					}
+					return 0;
 				}
 			}
 		};
