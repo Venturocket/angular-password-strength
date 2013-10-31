@@ -1,6 +1,6 @@
 {
     "name": "angular-password-strength",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Password strength filters and directive.",
     "main": "",
     "scripts": {
