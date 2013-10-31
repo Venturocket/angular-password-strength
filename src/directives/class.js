@@ -8,18 +8,8 @@ angular.module("vr.directives.passwordStrength.class", ["vr.filters.passwordStre
 	.directive("pwClass", ['$filter', function($filter) {
 		return {
 			restrict: "A",
-			scope: {
-				password: '@pwClass',
-				levels: '@pwLevels'
-			},
-			link: function(scope, elem) {
+			link: function(scope, elem, attr) {
 				var prevClass = '';
-				
-				scope.levels = parseInt(scope.levels);
-				
-				if(scope.levels < 1 || scope.levels == Infinity) {
-					scope.levels = 5;
-				}
 				
 				function setClass(password, levels) {
 					if(prevClass != '') {
@@ -33,11 +23,17 @@ angular.module("vr.directives.passwordStrength.class", ["vr.filters.passwordStre
 					}
 				}
 				
-				scope.$watch('password', function(newPassword) {
+				scope.$watch(function() { return attr.pwClass; }, function(newPassword) {
+					scope.password = newPassword;
 					setClass(newPassword, scope.levels);
 				});
 				
-				scope.$watch('levels', function(newLevels) {
+				scope.$watch(function() { return attr.pwLevels; }, function(newLevels) {
+					if(newLevels) {
+						scope.levels = parseInt(newLevels);
+					} else {
+						scope.levels = undefined;
+					}
 					setClass(scope.password, newLevels);
 				})
 			}
