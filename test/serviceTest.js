@@ -15,48 +15,64 @@ describe("Password Strength Service", function() {
 	}));
 	
 	it("should satisfy the length condition", function() {
+		expect($password.aspects.minimumLength.strength,undefined).not.toThrow();
+		expect($password.aspects.minimumLength.strength,null).not.toThrow();
 		expect($password.aspects.minimumLength.strength('12345678')).toBe(30);
 		expect($password.aspects.minimumLength.strength('1234567')).toBeAround(13);
 		expect($password.aspects.minimumLength.strength('123456789')).toBeAround(33);
 	});
 	
 	it("should satisfy the uppercase condition", function() {
+		expect($password.aspects.uppercaseLetters.strength,undefined).not.toThrow();
+		expect($password.aspects.uppercaseLetters.strength,null).not.toThrow();
 		expect($password.aspects.uppercaseLetters.strength('A')).toBe(10);
 		expect($password.aspects.uppercaseLetters.strength('a')).toBe(0);
 		expect($password.aspects.uppercaseLetters.strength('AA')).toBe(10);
 	});
 	
 	it("should satisfy the lowercase condition", function() {
+		expect($password.aspects.lowercaseLetters.strength,undefined).not.toThrow();
+		expect($password.aspects.lowercaseLetters.strength,null).not.toThrow();
 		expect($password.aspects.lowercaseLetters.strength('a')).toBe(10);
 		expect($password.aspects.lowercaseLetters.strength('A')).toBe(0);
 		expect($password.aspects.lowercaseLetters.strength('aa')).toBe(10);
 	});
 	
 	it("should satisfy the symbol condition", function() {
+		expect($password.aspects.symbols.strength,undefined).not.toThrow();
+		expect($password.aspects.symbols.strength,null).not.toThrow();
 		expect($password.aspects.symbols.strength('!')).toBe(10);
 		expect($password.aspects.symbols.strength('a')).toBe(0);
 		expect($password.aspects.symbols.strength('!?')).toBe(10);
 	});
 	
 	it("should satisfy the number condition", function() {
+		expect($password.aspects.numbers.strength,undefined).not.toThrow();
+		expect($password.aspects.numbers.strength,null).not.toThrow();
 		expect($password.aspects.numbers.strength('1')).toBe(10);
 		expect($password.aspects.numbers.strength('a')).toBe(0);
 		expect($password.aspects.numbers.strength('12')).toBe(10);
 	});
 	
 	it("should satisfy the duplicates condition", function() {
+		expect($password.aspects.duplicates.strength,undefined).not.toThrow();
+		expect($password.aspects.duplicates.strength,null).not.toThrow();
 		expect($password.aspects.duplicates.strength('1111')).toBe(-30);
 		expect($password.aspects.duplicates.strength('111')).toBe(0);
 		expect($password.aspects.duplicates.strength('11111')).toBe(-60);
 	});
 	
 	it("should satisfy the consecutive condition", function() {
+		expect($password.aspects.consecutive.strength,undefined).not.toThrow();
+		expect($password.aspects.consecutive.strength,null).not.toThrow();
 		expect($password.aspects.consecutive.strength('1234')).toBe(-10);
 		expect($password.aspects.consecutive.strength('123')).toBe(0);
 		expect($password.aspects.consecutive.strength('12345')).toBe(-20);
 	});
 	
 	it("should satisfy the dictionary condition", function() {
+		expect($password.aspects.dictionary.strength,undefined).not.toThrow();
+		expect($password.aspects.dictionary.strength,null).not.toThrow();
 		expect($password.aspects.dictionary.strength('password')).toBe(-40);
 		expect($password.aspects.dictionary.strength('ababab')).toBe(0);
 		expect($password.aspects.dictionary.strength('passwordragon')).toBe(-80);

@@ -11,3 +11,6 @@ before_script:
 
 script:
   - karma start --no-auto-watch --single-run --reporters dots --browsers Firefox
+  
+notifications:
+  email: false
