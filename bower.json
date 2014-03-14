@@ -1,16 +1,19 @@
 {
     "name": "angular-password-strength",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "main": "./build/angular-password-strength.min.js",
     "ignore": [
         "**/.*",
         "node_modules",
-        "components"
+        "components",
+		"app",
+		"src"
     ],
     "dependencies": {
         "angular": "^1.0.8"
     },
     "devDependencies": {
-        "angular-mocks": "*",        "angular-scenario": "*"
+        "angular-mocks": "*",        
+		"angular-scenario": "*"
     }
 }

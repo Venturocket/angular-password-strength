@@ -10,7 +10,7 @@ before_script:
   - bower install
 
 script:
-  - karma start --no-auto-watch --single-run --reporters dots --browsers Firefox
+  - karma start --no-auto-watch --single-run --reporters dots
   
 notifications:
   email: false
