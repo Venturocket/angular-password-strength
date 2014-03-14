@@ -13,9 +13,6 @@
     "author": "Venturocket, Inc.",
     "license": "MIT",
     "devDependencies": {
-        "karma": "~0.12.0",
-        "karma-jasmine": "*",
-        "karma-phantomjs-launcher": "*",
         "grunt": "*",
         "grunt-contrib-jshint": "*",
         "grunt-contrib-nodeunit": "*",
