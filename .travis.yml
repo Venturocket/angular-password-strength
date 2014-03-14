@@ -10,7 +10,7 @@ before_script:
   - bower install
 
 script:
-  - karma start --no-auto-watch --single-run --reporters dots
+  - karma start --no-auto-watch --single-run --reporters dots --browsers PhantomJS
   
 notifications:
   email: false

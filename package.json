@@ -4,7 +4,7 @@
     "description": "Password strength filters and directive.",
     "main": "",
     "scripts": {
-        "test": "karma start --single-run --no-auto-watch"
+        "test": "karma start --single-run --no-auto-watch --browsers PhantomJS"
     },
     "repository": {
         "type": "git",
