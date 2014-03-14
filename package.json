@@ -4,7 +4,7 @@
     "description": "Password strength filters and directive.",
     "main": "",
     "scripts": {
-        "test": "karma start --single-run --no-auto-watch --browsers PhantomJS"
+        "test": "karma start --single-run --no-auto-watch --reporters dots --browsers PhantomJS"
     },
     "repository": {
         "type": "git",
@@ -13,7 +13,7 @@
     "author": "Venturocket, Inc.",
     "license": "MIT",
     "devDependencies": {
-        "karma": "*",
+        "karma": "~0.12.0",
         "karma-jasmine": "*",
         "karma-phantomjs-launcher": "*",
         "grunt": "*",
